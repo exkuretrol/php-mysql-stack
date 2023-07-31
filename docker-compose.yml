@@ -1,0 +1,20 @@
+services:
+    db:
+        image: mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: notSecureChangeMe
+        volumes:
+            - ./db:/var/lib/mysql
+        
+    php: 
+        build:
+            context: .
+            dockerfile: php.Dockerfile
+        restart: unless-stopped
+        volumes:
+            - ./php:/var/www/html
+            - ./config/php.ini:/usr/local/etc/php/php.ini
+        ports:
+            - 80:80
+
